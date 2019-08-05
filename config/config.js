@@ -1,0 +1,1 @@
+module.exports.SECRET_KEY = '@este-es@-un-seed-dificil';
