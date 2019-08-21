@@ -46,7 +46,7 @@ userController.updateUserById = (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    User.findById(id, 'name email img role')
+    User.findById(id, 'name email img role google')
         .exec(
             (err, user) => {
 

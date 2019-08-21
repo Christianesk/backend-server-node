@@ -3,12 +3,15 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const URL_FRONTEND = require('./config/config').URL_FRONTEND;
 
 
 
 //Variable Initialization
 
 var app = express();
+app.use(cors({origin:URL_FRONTEND}));
 const PORT_SERVER = 3000;
 
 //BodyParser

@@ -18,6 +18,7 @@ app.use(fileUpload());
 
 
 uploadController.loadFile = (req, res, next) => {
+    
 
     var type = req.params.type;
     var id = req.params.id;

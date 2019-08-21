@@ -22,7 +22,7 @@ app.put('/:id', mdAuthentication.checkToken , userController.updateUserById);
 * Author: Christian Mena
 * Description: Method that create a new user
 **/
-app.post('/', mdAuthentication.checkToken , userController.createUser);
+app.post('/', userController.createUser);
 
 /**
 * Author: Christian Mena
