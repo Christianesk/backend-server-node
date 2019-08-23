@@ -13,6 +13,12 @@ app.get('/', hospitalController.getAllHospital);
 
 /**
 * Author: Christian Mena
+* Description: Methot that find Hospital by Id
+**/
+app.get('/:id', mdAuthentication.checkToken, hospitalController.findById);
+
+/**
+* Author: Christian Mena
 * Description: Method that update a hospital for id
 **/
 app.put('/:id', mdAuthentication.checkToken, hospitalController.updateHospitalById);

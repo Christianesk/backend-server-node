@@ -38,6 +38,38 @@ hospitalController.getAllHospital = (req, res, next) => {
 
 /**
 * Author: Christian Mena
+* Description: Methot that find Hospital by Id
+**/
+hospitalController.findById = (req, res) => {
+    var id = req.params.id;
+    Hospital.findById(id)
+        .populate('user', 'name img email')
+        .exec((err, hospital) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar hospital',
+                    errors: err
+                });
+            }
+            if (!hospital) {
+                return res.status(400).json({
+                    ok: false,
+                    message: 'the hospital with id ' + id + 'no exists',
+                    errors: {
+                        message: 'There is no hospital with that id'
+                    }
+                });
+            }
+            res.status(200).json({
+                ok: true,
+                hospital: hospital
+            });
+        });
+}
+
+/**
+* Author: Christian Mena
 * Description: Method that update a hospital for id
 **/
 hospitalController.updateHospitalById = (req, res) => {
@@ -148,5 +180,8 @@ hospitalController.deleteHospital = (req, res) => {
 
 
 };
+
+
+
 
 module.exports = hospitalController;
