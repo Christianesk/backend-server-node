@@ -13,6 +13,12 @@ app.get('/', doctorController.getAllDoctor);
 
 /**
 * Author: Christian Mena
+* Description: Method that gets doctor by Id
+**/
+app.get('/:id', doctorController.getDoctorById);
+
+/**
+* Author: Christian Mena
 * Description: Method that update a doctor for id
 **/
 app.put('/:id', mdAuthentication.checkToken, doctorController.updateDoctorById);

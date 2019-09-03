@@ -40,6 +40,44 @@ doctorController.getAllDoctor = (req, res, next) => {
 
 /**
 * Author: Christian Mena
+* Description: Method that gets doctor by Id
+**/
+doctorController.getDoctorById = (req, res, next) => {
+
+    var id = req.params.id;
+    Doctor.findById(id)
+        .populate('user', 'name email img')
+        .populate('hospital')
+        .exec((err, doctor) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    message: 'Error finding doctor',
+                    errors: err
+                });
+            }
+
+            if (!doctor) {
+                return res.status(400).json({
+                    ok: false,
+                    message: 'The doctor with id: ' + id + ' does not exist',
+                    errors: { message: 'There is no doctor with that id' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                doctor
+            });
+
+        });
+
+
+};
+
+
+/**
+* Author: Christian Mena
 * Description: Method that update a doctor for id
 **/
 doctorController.updateDoctorById = (req, res) => {
