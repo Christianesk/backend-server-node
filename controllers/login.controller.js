@@ -25,7 +25,7 @@ loginController.createUserLogin = (req, res) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
-                message: 'Error shearching user',
+                message: 'Error searching user',
                 errors: err
             });
         }
@@ -48,7 +48,7 @@ loginController.createUserLogin = (req, res) => {
 
         userDB.password = ':)';
         //Create token
-        loadFieldsInUser(userDB,res);
+        loadFieldsInUser(userDB, res);
     });
 
 
@@ -90,7 +90,7 @@ loginController.createUserLoginWithGoogle = async (req, res) => {
                 });
             } else {
                 //Create token
-                loadFieldsInUser(userDB,res);
+                loadFieldsInUser(userDB, res);
             }
         } else {
             //The user does not exist must be created
@@ -112,7 +112,7 @@ loginController.createUserLoginWithGoogle = async (req, res) => {
                     });
                 }
 
-                loadFieldsInUser(userDB,res);
+                loadFieldsInUser(userDB, res);
             });
 
         }
@@ -147,15 +147,48 @@ async function verify(token) {
 * Author: Christian Mena
 * Description: Method to load fields in model User
 **/
-function loadFieldsInUser(userDB,res) {
+function loadFieldsInUser(userDB, res) {
     var token = jwt.sign({ user: userDB }, SECRET_KEY, { expiresIn: 14400 });//4hours
 
     res.status(200).json({
         ok: true,
         user: userDB,
         token: token,
-        id: userDB._id
+        id: userDB._id,
+        menu: getMenu(userDB.role)
     });
+}
+
+function getMenu(role) {
+
+    var menu = [
+        {
+            title: 'Principal',
+            icon: 'mdi mdi-gauge',
+            subMenu: [
+                { title: 'Dashboard', url: '/dashboard' },
+                { title: 'ProgressBar', url: '/progress' },
+                { title: 'Graficas', url: '/graficas1' },
+                { title: 'Promesas', url: '/promesas' },
+                { title: 'Rxjs', url: '/rxjs' }
+            ]
+        },
+        {
+            title: 'Mantenimientos',
+            icon: 'mdi mdi-folder-lock-open',
+            subMenu: [
+                { title: 'Hospitales', url: '/hospitales' },
+                { title: 'Médicos', url: '/medicos' }
+            ]
+
+        }
+    ];
+
+    if (role === 'ADMIN_ROLE') {
+        menu[1].subMenu.unshift({ title: 'Usuarios', url: '/usuarios' });
+    }
+
+    return menu;
 }
 
 
