@@ -11,6 +11,20 @@ var CLIENT_ID = require('../config/config').CLIENT_ID;
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(CLIENT_ID);
 
+
+/**
+* Author: Christian Mena
+* Description: Method that renew token
+**/
+loginController.renewToken = (req, res) => {
+    var token = jwt.sign({ user: req.user }, SECRET_KEY, { expiresIn: 14400 });//4hours
+
+    res.status(200).json({
+        ok: true,
+        token: token,
+    });
+};
+
 /**
 * Author: Christian Mena
 * Description: Method for create User Login
